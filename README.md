@@ -27,6 +27,7 @@ Make sure you're running Arch Linux and have sudo privileges.
     chmod +x setup.sh
     ./setup.sh
     source ~/.bashrc
+    cd ..
     ```
 
 ### Additional Commands
