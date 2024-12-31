@@ -1,4 +1,6 @@
 TermiCool
+
+
 Make your arch terminal fun again
 A comprehensive setup script to supercharge your Arch Linux terminal with aliases, useful tools, and personalized enhancements. This script automatically installs essential packages like lolcat, neofetch, and more while adding practical aliases for navigation, system monitoring, Git, and development. It also includes motivational quotes and visual tweaks to make your terminal experience productive and enjoyable.
 ![Screenshot From 2024-12-31 09-14-00](https://github.com/user-attachments/assets/e2ee8ae5-2bf7-48ef-9db7-4fba5c1b1192)
