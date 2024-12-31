@@ -21,11 +21,11 @@ cd TermiCool
 chmod +x setup.sh
 ./setup.sh
 ```
-To see the keys that have been added:
+To see the keys that have been added just type:
 ```shell
 keys
 ```
-If you want to restore
+If you want to revert back to your normal system:
 ```shell
  cp /etc/skel/.bashrc ~/
 ```
