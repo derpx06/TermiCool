@@ -8,3 +8,8 @@ Features:
     Motivational quotes and system info displayed on terminal startup.
     Fun additions like neofetch and lolcat for a vibrant terminal experience.
     Supports structured, XDG-compliant configuration file for quotes.
+
+How to Install
+Prerequisites
+
+Ensure you’re running Arch Linux and have the sudo privilege.
