@@ -28,6 +28,8 @@ git clone https://github.com/manas1511200/TermiCool.git
 cd TermiCool
 chmod +x setup.sh
 ./setup.sh
+source ~/.bashrc
+
 ```
 To see the keys that have been added just type:
 ```shell
