@@ -1,59 +1,71 @@
-TermiCool
+# TermiCool
 
+**Make your Arch terminal fun again!**
 
-Make your arch terminal fun again.
+TermiCool is a comprehensive setup script designed to supercharge your Arch Linux terminal experience. It brings fun and productivity to your workflow by adding useful tools, shortcuts, and visual enhancements. The script automatically installs essential packages like `lolcat`, `neofetch`, and more, while adding practical aliases for navigation, system monitoring, Git, and development. It even includes motivational quotes and tweaks to make your terminal experience more enjoyable.
 
+![Screenshot](https://github.com/user-attachments/assets/e2ee8ae5-2bf7-48ef-9db7-4fba5c1b1192)
 
-A comprehensive setup script to supercharge your Arch Linux terminal with Shortcuts, useful tools, and personalized enhancements. This script automatically installs essential packages like lolcat, neofetch, and more while adding practical aliases for navigation, system monitoring, Git, and development. It also includes motivational quotes and visual tweaks to make your terminal experience productive and enjoyable.
-![Screenshot From 2024-12-31 09-14-00](https://github.com/user-attachments/assets/e2ee8ae5-2bf7-48ef-9db7-4fba5c1b1192)
+## Features
+- **Custom Shortcuts:** Speed up your command-line navigation with user-friendly shortcuts.
+- **Pacman Shortcuts:** Simplified package management for Arch Linux with pacman aliases.
+- **Motivational Quotes:** Enjoy a motivational quote and system info on terminal startup.
+- **Fun Additions:** Includes `neofetch`, `lolcat`, and more to add fun and vibrancy to your terminal.
+- **Customizable:** Structured, XDG-compliant configuration file for quotes and personalization.
+  
+## How to Install
 
-Features:
-    Custom Shortcuts for faster command-line navigation.
+### Prerequisites
+Make sure you're running Arch Linux and have sudo privileges.
 
-Enhancements for Arch Linux package management with pacman shortcuts.
-    Motivational quotes and system info displayed on terminal startup.
-    Fun additions like neofetch and lolcat for a vibrant terminal experience.
-    Supports structured, XDG-compliant configuration file for quotes.
+### Installation Steps
+1. Clone the repository and navigate to the project directory:
+    ```bash
+    [ -d "TermiCool" ] && rm -rf "TermiCool"
+    git clone https://github.com/manas1511200/TermiCool.git
+    cd TermiCool
+    ```
 
-How to Install
+2. Grant execute permission to the setup script:
+    ```bash
+    chmod +x setup.sh
+    ```
 
+3. Run the setup script to install TermiCool:
+    ```bash
+    ./setup.sh
+    ```
 
-Prerequisites
+4. Reload the `.bashrc` file to apply changes:
+    ```bash
+    source ~/.bashrc
+    ```
 
-Ensure you’re running Arch Linux and have the sudo privilege.
-```shell
+### Additional Commands
 
-[ -d "TermiCool" ] && rm -rf "TermiCool"
-git clone https://github.com/manas1511200/TermiCool.git
-cd TermiCool
-chmod +x setup.sh
-./setup.sh
-source ~/.bashrc
+- **Check the added keys:**
+    ```bash
+    keys
+    ```
 
-```
-To see the keys that have been added just type:
-```shell
-keys
-```
-If you want to revert back to your normal system:
-```shell
-cp ~/.bashrc.backup ~/.bashrc
-source ~/.bashrc
+- **Revert back to your original `.bashrc`:**
+    ```bash
+    cp ~/.bashrc.backup ~/.bashrc
+    source ~/.bashrc
+    ```
 
-```
+- **Reset to the system default `.bashrc`:**
+    ```bash
+    cp /etc/skel/.bashrc ~/
+    ```
 
-If you want to load the system default of the OS
-```shell
-cp /etc/skel/.bashrc ~/
-```
-If you wnat to do the same pattern again just type
-```shell
-reload
-```
+- **Reload the setup (if you want to reapply the changes):**
+    ```bash
+    reload
+    ```
 
+### Customization
+You can easily edit the `.bashrc` file to modify configurations, add new aliases, or make other adjustments to fit your preferences.
 
-YOU can also edit the .bashrc file to change the configurations, add alias and many other things
-
-
-
-
+## Contributions
+Feel free to fork this project and contribute improvements. If you have any suggestions or issues, please open an issue or create a pull request.
