@@ -9,7 +9,7 @@ TermiCool is a comprehensive setup script designed to supercharge your Arch Linu
 ## Features
 - **Custom Shortcuts:** Speed up your command-line navigation with user-friendly shortcuts.
 - **Pacman Shortcuts:** Simplified package management for Arch Linux with pacman aliases.
-- **Motivational Quotes:** Enjoy a motivational quote and system info on terminal startup.
+- **Quotes:** Enjoy  quotes about system info on terminal startup.
 - **Fun Additions:** Includes `neofetch`, `lolcat`, and more to add fun and vibrancy to your terminal.
 - **Customizable:** Structured, XDG-compliant configuration file for quotes and personalization.
   
