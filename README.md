@@ -4,7 +4,7 @@ A comprehensive setup script to supercharge your Arch Linux terminal with aliase
 ![Screenshot From 2024-12-31 09-14-00](https://github.com/user-attachments/assets/e2ee8ae5-2bf7-48ef-9db7-4fba5c1b1192)
 
 Features:
-   Custom aliases for faster command-line navigation.
+    Custom aliases for faster command-line navigation.
     Enhancements for Arch Linux package management with pacman shortcuts.
     Motivational quotes and system info displayed on terminal startup.
     Fun additions like neofetch and lolcat for a vibrant terminal experience.
@@ -13,10 +13,22 @@ Features:
 How to Install
 Prerequisites
 Ensure you’re running Arch Linux and have the sudo privilege.
-```bash
+```shell
+
 [ -d "TermiCool" ] && rm -rf "TermiCool"
 git clone https://github.com/manas1511200/TermiCool.git
 cd TermiCool
 chmod +x setup.sh
 ./setup.sh
+```
+To see the keys that have been added:
+```shell
+keys
+```
+If you want to restore
+```shell
+ cp /etc/skel/.bashrc ~/
+```
+
+
 
