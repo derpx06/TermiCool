@@ -46,7 +46,7 @@ If you want to load the system default of the OS
 ```shell
 cp /etc/skel/.bashrc ~/
 ```
-If you wnat to do the same again just type
+If you wnat to do the same pattern again just type
 ```shell
 reload
 ```
