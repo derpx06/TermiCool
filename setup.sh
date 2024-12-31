@@ -32,7 +32,7 @@ custom_lines=(
     "# Display ISO version and distribution information in short"
     'alias version="sed -n 1p /etc/os-release && sed -n 12p /etc/os-release && sed -n 13p /etc/os-release"'
 
-    "# Navigational Aliases"
+    "# Navigational "
     'alias ..="cd .."'
     'alias ...="cd ../.."'
     'alias ....="cd ../../.."'
@@ -47,18 +47,18 @@ custom_lines=(
     'alias install="sudo pacman -S"'
     'alias update="sudo pacman -Syyu | lolcat"'
 
-    "# Cleanup Tasks"
+    "# Cleanup"
     'alias cleanup="sudo pacman -Rns $(pacman -Qdtq)"'
     'alias clean="sudo pacman -Scc --noconfirm"'
 
-    "# Networking Aliases"
+    "# Networking "
     'alias myip="curl ifconfig.me"'
     'alias ports="netstat -tulanp"'
     'alias ping="ping -c 5"'
     'alias wget="wget -c"'
     'alias speedtest="curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -"'
 
-    "# Git Aliases"
+    "# Git "
     'alias gs="git status"'
     'alias ga="git add"'
     'alias gc="git commit"'
@@ -68,15 +68,18 @@ custom_lines=(
     'alias gbr="git branch"'
     'alias gpull="git pull"'
     'alias gclone="git clone"'
-    'alias keys="echo -e \"Navigational Aliases:\\n.., ..., ...., back, home, root, docs, dwnld\\n\\nPacman Shortcuts:\\nsync, install, update\\n\\nCleanup Tasks:\\ncleanup, clean\\n\\nNetworking Aliases:\\nmyip, ports, ping, wget, speedtest\\n\\nGit Aliases:\\ngs, ga, gc, gp, gl, gco, gbr, gpull, gclone\\n\\nSystem Monitoring Aliases:\\nusage, mem, top, psx, temps\\n\\nDevelopment and Coding Aliases:\\ncls, pyserve, c, cxx, jvbuild, jvexec\\n\\nMotivational and Handy Aliases:\\ntoday, timestamp, reload\\n\\nSystem Actions:\\nshutdown, reboot\\n\\nEnhanced Terminal Features:\\nneofetch, disk-usage, tree\\n\\nFun and Creative Additions:\\nsayhello, weather\\n\\nExtra Aliases:\\nuptime\"'
-    "# System Monitoring Aliases"
+    
+    "# Keys alias displaying all Shortcuts"
+    'alias keys="echo -e \"Navigational Shortcuts:\\n.., ..., ...., back, home, root, docs, dwnld\\n\\nPacman Shortcuts:\\nsync, install, update\\n\\nCleanup Tasks:\\ncleanup, clean\\n\\nNetworking shorcuts:\\nmyip, ports, ping, wget, speedtest\\n\\nGit Aliases:\\ngs, ga, gc, gp, gl, gco, gbr, gpull, gclone\\n\\nSystem Monitoring Shortcuts:\\nusage, mem, top, psx, temps\\n\\nDevelopment and Coding Aliases:\\ncls, pyserve, c, cxx, jvbuild, jvexec\\n\\nHandy Shortcuts:\\ntoday, timestamp, reload\\n\\nSystem Actions:\\nshutdown, reboot\\n\\nEnhanced Terminal Features:\\nneofetch, disk-usage, tree\\n\\nFun and Creative Additions:\\nsayhello, weather\\n\\nExtra Shortcut:\\nuptime\""'
+
+    "# System Monitoring"
     'alias usage="df -h"'
     'alias mem="free -h"'
     'alias top="htop"'
     'alias psx="ps aux --sort=-%mem | head"'
     'alias temps="sensors"'
 
-    "# Development and Coding Aliases"
+    "# Development and Coding"
     'alias cls="clear"'
     'alias pyserve="python -m http.server 8000"'
     'alias c="gcc -Wall -o"'
@@ -84,7 +87,7 @@ custom_lines=(
     'alias jvbuild="javac"'
     'alias jvexec="java"'
 
-    "# Motivational and Handy Aliases"
+    "# Motivational and Handy "
     'alias today="date +\"%A, %B %d, %Y\""'
     'alias timestamp="date +\"%Y-%m-%d %H:%M:%S\""'
     'alias reload="source ~/.bashrc"'
@@ -104,11 +107,12 @@ custom_lines=(
     "# Fun and Creative Additions"
     'alias sayhello="echo \"Hello, $USER! Have a great day ahead!\""'
     'alias weather="curl wttr.in"'
-    
-    "# Extra Aliases"
-    'alias uptime="uptime -p"'    
+
+    "# Extra"
+    'alias uptime="uptime -p"'
 
     "# Display a random quote from the file each time a new terminal session starts"
+
     'neofetch | lolcat'
     'QUOTE_FILE="$HOME/.Terminal_Quotes"'
     'if [ -f "$QUOTE_FILE" ]; then'
@@ -123,11 +127,10 @@ custom_lines=(
 for line in "${custom_lines[@]}"; do
     if ! grep -Fxq "$line" ~/.bashrc; then
         echo "$line" >> ~/.bashrc
-        echo "Added: $line"
     fi
 done
 
-
+# Move 'mine' file to hidden .Terminal_Quotes directory
 mv "$HOME/TermiCool/mine" "$HOME/.Terminal_Quotes"
 
 # Reload the .bashrc to apply the changes
@@ -138,4 +141,3 @@ source ~/.bashrc
 echo "Setup complete! :-)"
 echo "You can now use the enhanced commands on your terminal."
 echo "Restart the terminal and enjoy... 🤯"
-
