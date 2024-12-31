@@ -68,7 +68,7 @@ custom_lines=(
     'alias gbr="git branch"'
     'alias gpull="git pull"'
     'alias gclone="git clone"'
-
+    'alias keys="echo -e \"Navigational Aliases:\\n.., ..., ...., back, home, root, docs, dwnld\\n\\nPacman Shortcuts:\\nsync, install, update\\n\\nCleanup Tasks:\\ncleanup, clean\\n\\nNetworking Aliases:\\nmyip, ports, ping, wget, speedtest\\n\\nGit Aliases:\\ngs, ga, gc, gp, gl, gco, gbr, gpull, gclone\\n\\nSystem Monitoring Aliases:\\nusage, mem, top, psx, temps\\n\\nDevelopment and Coding Aliases:\\ncls, pyserve, c, cxx, jvbuild, jvexec\\n\\nMotivational and Handy Aliases:\\ntoday, timestamp, reload\\n\\nSystem Actions:\\nshutdown, reboot\\n\\nEnhanced Terminal Features:\\nneofetch, disk-usage, tree\\n\\nFun and Creative Additions:\\nsayhello, weather\\n\\nExtra Aliases:\\nuptime\"'
     "# System Monitoring Aliases"
     'alias usage="df -h"'
     'alias mem="free -h"'
