@@ -42,7 +42,7 @@ source ~/.bashrc
 
 ```
 
-If you want to load the system default
+If you want to load the system default of the OS
 ```shell
 cp /etc/skel/.bashrc ~/
 ```
