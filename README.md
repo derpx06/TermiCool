@@ -35,7 +35,9 @@ keys
 ```
 If you want to revert back to your normal system:
 ```shell
- cp /etc/skel/.bashrc ~/
+cp ~/.bashrc.backup ~/.bashrc
+source ~/.bashrc
+
 ```
 
 
