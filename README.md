@@ -15,4 +15,9 @@ Prerequisites
 Ensure you’re running Arch Linux and have the sudo privilege.
 ```bash
 git clone https://github.com/manas1511200/TermiCool.git
-cd Termicool
+cd ~
+mv TermiCool .TermiCool
+cd .TermiCool
+chmod +x setup.sh
+./setup.sh
+
