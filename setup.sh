@@ -6,7 +6,7 @@ if ! grep -q "Arch" /etc/os-release; then
     exit 1
 fi
 
-# Backup existing .bashrc (just in case)
+# Backup existing .bashrc 
 echo "Backing up existing ~/.bashrc to ~/.bashrc.backup..."
 cp ~/.bashrc ~/.bashrc.backup
 
