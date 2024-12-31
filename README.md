@@ -14,6 +14,7 @@ How to Install
 Prerequisites
 Ensure you’re running Arch Linux and have the sudo privilege.
 ```bash
+[ -d "TermiCool" ] && rm -rf "TermiCool"
 git clone https://github.com/manas1511200/TermiCool.git
 cd TermiCool
 chmod +x setup.sh
