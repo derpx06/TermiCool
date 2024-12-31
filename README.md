@@ -42,5 +42,10 @@ source ~/.bashrc
 
 ```
 
+If you want to load the system default
+```shell
+cp /etc/skel/.bashrc ~/
+```
+
 
 
