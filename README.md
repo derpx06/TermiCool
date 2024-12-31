@@ -5,13 +5,16 @@ A comprehensive setup script to supercharge your Arch Linux terminal with aliase
 
 Features:
     Custom aliases for faster command-line navigation.
-    Enhancements for Arch Linux package management with pacman shortcuts.
+
+Enhancements for Arch Linux package management with pacman shortcuts.
     Motivational quotes and system info displayed on terminal startup.
     Fun additions like neofetch and lolcat for a vibrant terminal experience.
     Supports structured, XDG-compliant configuration file for quotes.
 
-#How to Install
-#Prerequisites
+How to Install
+
+
+Prerequisites
 
 Ensure you’re running Arch Linux and have the sudo privilege.
 ```shell
