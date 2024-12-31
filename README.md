@@ -46,6 +46,11 @@ If you want to load the system default of the OS
 ```shell
 cp /etc/skel/.bashrc ~/
 ```
+If you wnat to do the same again just type
+```shell
+reload
+```
+
 
 YOU can also edit the .bashrc file to change the configurations, add alias and many other things
 
