@@ -24,20 +24,8 @@ Make sure you're running Arch Linux and have sudo privileges.
     [ -d "TermiCool" ] && rm -rf "TermiCool"
     git clone https://github.com/manas1511200/TermiCool.git
     cd TermiCool
-    ```
-
-2. Grant execute permission to the setup script:
-    ```bash
     chmod +x setup.sh
-    ```
-
-3. Run the setup script to install TermiCool:
-    ```bash
     ./setup.sh
-    ```
-
-4. Reload the `.bashrc` file to apply changes:
-    ```bash
     source ~/.bashrc
     ```
 
