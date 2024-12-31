@@ -11,6 +11,7 @@ Features:
 
 How to Install
 Prerequisites
+![dino](https://github.com/user-attachments/assets/987ce3f8-66d5-4204-86e7-e8f47e7b317b)
 
 Ensure you’re running Arch Linux and have the sudo privilege.
 ```bash
