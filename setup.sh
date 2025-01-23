@@ -115,16 +115,16 @@ if [[ $choice == 1 ]]; then
 elif [[ $choice == 2 ]]; then
     # Append and Override mode
     echo "Appending and overriding custom lines in ~/.bashrc..."
-    cp ~/.bashrc ~/.bashrc.backup  # Backup existing .bashrc
+    cp ~/.bashrc ~/.bashrc.bak  # Backup existing .bashrc
 
     # Add or replace custom lines
     for line in "${custom_lines[@]}"; do
-        key=$(echo "$line" | awk '{print $1}')  # Extract key for matching
-        if grep -Fxq "$key" ~/.bashrc; then
-            # If the key exists, replace the line
-            sed -i "s|^$key.*|$line|" ~/.bashrc
+        key=$(echo "$line" | awk '{print $2}' | cut -d '=' -f 1)  # Extract alias name
+        if grep -q "alias $key=" ~/.bashrc; then
+            # If the alias exists, replace it
+            sed -i "s|alias $key=.*|$line|" ~/.bashrc
         else
-            # If the key doesn't exist, append the line
+            # If the alias doesn't exist, append it
             echo "$line" >> ~/.bashrc
         fi
     done
