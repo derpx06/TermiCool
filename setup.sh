@@ -7,9 +7,14 @@ if ! grep -q "Arch" /etc/os-release; then
 fi
 
 # Prompt user for action
-echo "Do you want to (1) Rebuild .bashrc or (2) Append and Override to the existing .bashrc?"
-echo "Enter 1 for Rebuild, 2 for Append:"
+echo "Do you want to (1) Rebuild .bashrc or (2) Append and Override to the existing .bashrc? (Default: Append)"
+echo "Enter 1 for Rebuild, 2 for Append, or press Enter for default:"
 read -r choice
+
+# If no choice is provided, default to append
+if [[ -z $choice ]]; then
+    choice=2
+fi
 
 # Define the custom lines to add or override
 custom_lines=(
@@ -68,6 +73,17 @@ custom_lines=(
     'alias neofetch="neofetch"'
     'alias disk-usage="ncdu"'
     'alias tree="tree -C"'
+
+    "# Color Aliases"
+    'alias red="echo -e \"\033[31m\""'     # Red
+    'alias green="echo -e \"\033[32m\""'   # Green
+    'alias yellow="echo -e \"\033[33m\""'  # Yellow
+    'alias blue="echo -e \"\033[34m\""'    # Blue
+    'alias magenta="echo -e \"\033[35m\""' # Magenta
+    'alias cyan="echo -e \"\033[36m\""'    # Cyan
+    'alias reset="echo -e \"\033[0m\""'    # Reset to default
+    'alias bold="echo -e \"\033[1m\""'     # Bold text
+    'alias underline="echo -e \"\033[4m\""' # Underlined text
 
     "# Extra"
     'alias uptime="uptime -p"'
