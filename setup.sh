@@ -6,26 +6,10 @@ if ! grep -q "Arch" /etc/os-release; then
     exit 1
 fi
 
-# Backup existing .bashrc 
-echo "Backing up existing ~/.bashrc to ~/.bashrc.backup..."
-cp ~/.bashrc ~/.bashrc.backup
-
-# List of packages to check and install
-packages=(
-    "lolcat"
-    "jq"
-    "neofetch"
-)
-
-# Check and install missing packages
-for pkg in "${packages[@]}"; do
-    if ! pacman -Q "$pkg" &>/dev/null; then
-        echo "Package $pkg not found. Installing..."
-        sudo pacman -S --noconfirm "$pkg"
-    else
-        echo "Package $pkg is already installed."
-    fi
-done
+# Ask the user if they want to rebuild or append the .bashrc
+echo "Do you want to (1) Rebuild .bashrc or (2) Append to the existing .bashrc?"
+echo "Enter 1 for Rebuild, 2 for Append:"
+read -r choice
 
 # Define the custom lines you want to add to .bashrc
 custom_lines=(
@@ -70,7 +54,7 @@ custom_lines=(
     'alias gclone="git clone"'
     
     "# Keys alias displaying all Shortcuts"
-    'alias keys="echo -e \"Navigational Shortcuts:\\n.., ..., ...., back, home, root, docs, dwnld\\n\\nPacman Shortcuts:\\nsync, install, update\\n\\nCleanup Tasks:\\ncleanup, clean\\n\\nNetworking shorcuts:\\nmyip, ports, ping, wget, speedtest\\n\\nGit Aliases:\\ngs, ga, gc, gp, gl, gco, gbr, gpull, gclone\\n\\nSystem Monitoring Shortcuts:\\nusage, mem, top, psx, temps\\n\\nDevelopment and Coding Aliases:\\ncls, pyserve, c, cxx, jvbuild, jvexec\\n\\nHandy Shortcuts:\\ntoday, timestamp, reload\\n\\nSystem Actions:\\nshutdown, reboot\\n\\nEnhanced Terminal Features:\\nneofetch, disk-usage, tree\\n\\nFun and Creative Additions:\\nsayhello, weather\\n\\nExtra Shortcut:\\nuptime\""'
+    'alias keys="echo -e \"Navigational Shortcuts:\\n.., ..., ...., back, home, root, docs, dwnld\\n\\nPacman Shortcuts:\\nsync, install, update\\n\\nCleanup Tasks:\\ncleanup, clean\\n\\nNetworking shortcuts:\\nmyip, ports, ping, wget, speedtest\\n\\nGit Aliases:\\ngs, ga, gc, gp, gl, gco, gbr, gpull, gclone\\n\\nSystem Monitoring Shortcuts:\\nusage, mem, top, psx, temps\\n\\nDevelopment and Coding Aliases:\\ncls, pyserve, c, cxx, jvbuild, jvexec\\n\\nHandy Shortcuts:\\ntoday, timestamp, reload\\n\\nSystem Actions:\\nshutdown, reboot\\n\\nEnhanced Terminal Features:\\nneofetch, disk-usage, tree\\n\\nFun and Creative Additions:\\nsayhello, weather\\n\\nExtra Shortcut:\\nuptime\""'
 
     "# System Monitoring"
     'alias usage="df -h"'
@@ -112,7 +96,6 @@ custom_lines=(
     'alias uptime="uptime -p"'
 
     "# Display a random quote from the file each time a new terminal session starts"
-
     'neofetch | lolcat'
     'QUOTE_FILE="$HOME/.Terminal_Quotes"'
     'if [ -f "$QUOTE_FILE" ]; then'
@@ -123,15 +106,41 @@ custom_lines=(
     'fi'
 )
 
-# Check if each custom line exists in ~/.bashrc, and add it if not
-for line in "${custom_lines[@]}"; do
-    if ! grep -Fxq "$line" ~/.bashrc; then
-        echo "$line" >> ~/.bashrc
-    fi
-done
+if [[ $choice == 1 ]]; then
+    # Backup existing .bashrc
+    echo "Creating a backup of the existing ~/.bashrc as ~/.bashrc.bak..."
+    cp ~/.bashrc ~/.bashrc.bak
 
-# Move 'mine' file to hidden .Terminal_Quotes directory
-mv "$HOME/TermiCool/mine" "$HOME/.Terminal_Quotes"
+    # Create a fresh .bashrc file with default content
+    echo "# Default .bashrc file" > ~/.bashrc
+    echo "export PATH=\$PATH:/usr/local/bin" >> ~/.bashrc
+    echo "PS1='[\u@\h \W]\$ '" >> ~/.bashrc
+    echo "# Custom Aliases" >> ~/.bashrc
+
+    # Add custom lines
+    for line in "${custom_lines[@]}"; do
+        echo "$line" >> ~/.bashrc
+    done
+elif [[ $choice == 2 ]]; then
+    echo "Appending custom lines to the existing ~/.bashrc..."
+    # Backup existing .bashrc
+    cp ~/.bashrc ~/.bashrc.backup
+
+    # Add lines if they do not already exist
+    for line in "${custom_lines[@]}"; do
+        if ! grep -Fxq "$line" ~/.bashrc; then
+            echo "$line" >> ~/.bashrc
+        fi
+    done
+else
+    echo "Invalid choice. Exiting..."
+    exit 1
+fi
+
+# Move 'mine' file to hidden .Terminal_Quotes directory if it exists
+if [ -f "$HOME/TermiCool/mine" ]; then
+    mv "$HOME/TermiCool/mine" "$HOME/.Terminal_Quotes"
+fi
 
 # Reload the .bashrc to apply the changes
 echo "Reloading ~/.bashrc to apply the changes..."
