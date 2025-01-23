@@ -6,12 +6,12 @@ if ! grep -q "Arch" /etc/os-release; then
     exit 1
 fi
 
-# Ask the user if they want to rebuild or append the .bashrc
-echo "Do you want to (1) Rebuild .bashrc or (2) Append to the existing .bashrc?"
+# Prompt user for action
+echo "Do you want to (1) Rebuild .bashrc or (2) Append and Override to the existing .bashrc?"
 echo "Enter 1 for Rebuild, 2 for Append:"
 read -r choice
 
-# Define the custom lines you want to add to .bashrc
+# Define the custom lines to add or override
 custom_lines=(
     "# Display ISO version and distribution information in short"
     'alias version="sed -n 1p /etc/os-release && sed -n 12p /etc/os-release && sed -n 13p /etc/os-release"'
@@ -52,9 +52,6 @@ custom_lines=(
     'alias gbr="git branch"'
     'alias gpull="git pull"'
     'alias gclone="git clone"'
-    
-    "# Keys alias displaying all Shortcuts"
-    'alias keys="echo -e \"Navigational Shortcuts:\\n.., ..., ...., back, home, root, docs, dwnld\\n\\nPacman Shortcuts:\\nsync, install, update\\n\\nCleanup Tasks:\\ncleanup, clean\\n\\nNetworking shortcuts:\\nmyip, ports, ping, wget, speedtest\\n\\nGit Aliases:\\ngs, ga, gc, gp, gl, gco, gbr, gpull, gclone\\n\\nSystem Monitoring Shortcuts:\\nusage, mem, top, psx, temps\\n\\nDevelopment and Coding Aliases:\\ncls, pyserve, c, cxx, jvbuild, jvexec\\n\\nHandy Shortcuts:\\ntoday, timestamp, reload\\n\\nSystem Actions:\\nshutdown, reboot\\n\\nEnhanced Terminal Features:\\nneofetch, disk-usage, tree\\n\\nFun and Creative Additions:\\nsayhello, weather\\n\\nExtra Shortcut:\\nuptime\""'
 
     "# System Monitoring"
     'alias usage="df -h"'
@@ -63,34 +60,14 @@ custom_lines=(
     'alias psx="ps aux --sort=-%mem | head"'
     'alias temps="sensors"'
 
-    "# Development and Coding"
-    'alias cls="clear"'
-    'alias pyserve="python -m http.server 8000"'
-    'alias c="gcc -Wall -o"'
-    'alias cxx="g++ -std=c++17 -o"'
-    'alias jvbuild="javac"'
-    'alias jvexec="java"'
-
-    "# Motivational and Handy "
-    'alias today="date +\"%A, %B %d, %Y\""'
-    'alias timestamp="date +\"%Y-%m-%d %H:%M:%S\""'
-    'alias reload="source ~/.bashrc"'
-
-    "# System Actions"
-    'alias shutdown="sudo shutdown now"'
-    'alias reboot="sudo reboot"'
-
-    "# Timeout for Inactive Shells"
-    'export TMOUT=2000  # Auto-logout after 2000 seconds of inactivity'
+    "# Fun and Creative Additions"
+    'alias sayhello="echo \"Hello, $USER! Have a great day ahead!\""'
+    'alias weather="curl wttr.in"'
 
     "# Enhanced Terminal Features"
     'alias neofetch="neofetch"'
     'alias disk-usage="ncdu"'
     'alias tree="tree -C"'
-
-    "# Fun and Creative Additions"
-    'alias sayhello="echo \"Hello, $USER! Have a great day ahead!\""'
-    'alias weather="curl wttr.in"'
 
     "# Extra"
     'alias uptime="uptime -p"'
@@ -107,11 +84,9 @@ custom_lines=(
 )
 
 if [[ $choice == 1 ]]; then
-    # Backup existing .bashrc
-    echo "Creating a backup of the existing ~/.bashrc as ~/.bashrc.bak..."
-    cp ~/.bashrc ~/.bashrc.bak
-
-    # Create a fresh .bashrc file with default content
+    # Rebuild mode
+    echo "Rebuilding ~/.bashrc..."
+    cp ~/.bashrc ~/.bashrc.bak  # Backup existing .bashrc
     echo "# Default .bashrc file" > ~/.bashrc
     echo "export PATH=\$PATH:/usr/local/bin" >> ~/.bashrc
     echo "PS1='[\u@\h \W]\$ '" >> ~/.bashrc
@@ -122,13 +97,18 @@ if [[ $choice == 1 ]]; then
         echo "$line" >> ~/.bashrc
     done
 elif [[ $choice == 2 ]]; then
-    echo "Appending custom lines to the existing ~/.bashrc..."
-    # Backup existing .bashrc
-    cp ~/.bashrc ~/.bashrc.backup
+    # Append and Override mode
+    echo "Appending and overriding custom lines in ~/.bashrc..."
+    cp ~/.bashrc ~/.bashrc.backup  # Backup existing .bashrc
 
-    # Add lines if they do not already exist
+    # Add or replace custom lines
     for line in "${custom_lines[@]}"; do
-        if ! grep -Fxq "$line" ~/.bashrc; then
+        key=$(echo "$line" | awk '{print $1}')  # Extract key for matching
+        if grep -Fxq "$key" ~/.bashrc; then
+            # If the key exists, replace the line
+            sed -i "s|^$key.*|$line|" ~/.bashrc
+        else
+            # If the key doesn't exist, append the line
             echo "$line" >> ~/.bashrc
         fi
     done
