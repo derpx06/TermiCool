@@ -7,13 +7,13 @@ if ! grep -q "Arch" /etc/os-release; then
 fi
 
 # Prompt user for action
-echo "Do you want to (1) Rebuild .bashrc or (2) Append and Override to the existing .bashrc? (Default: Append)"
+echo "Do you want to (1) Rebuild .bashrc or (2) Append and Override to the existing .bashrc? (Default: Rebuild)"
 echo "Enter 1 for Rebuild, 2 for Append, or press Enter for default:"
 read -r choice
 
 # If no choice is provided, default to append
 if [[ -z $choice ]]; then
-    choice=2
+    choice=1
 fi
 
 # Define the custom lines to add or override
