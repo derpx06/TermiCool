@@ -10,7 +10,7 @@ if ! grep -q "Arch" /etc/os-release; then
 fi
 
 # Check for required packages and install if missing
-required_pkgs=("lolcat")
+required_pkgs=("lolcat" "neofetch" "ncdu" "htop" "tree" "lm_sensors" "curl" "wget" "git" "net-tools")
 missing_pkgs=()
 
 for pkg in "${required_pkgs[@]}"; do
@@ -91,6 +91,7 @@ custom_content=(
     "# Fun and Creative"
     'alias sayhello="echo \"Hello, \$USER! Have a great day!\""'
     'alias weather="curl wttr.in"'
+    'alias cowsay="cowsay Hello, \$USER!"'
 
     "# Enhanced Features"
     'alias neofetch="neofetch"'
