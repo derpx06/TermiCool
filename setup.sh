@@ -55,12 +55,12 @@ custom_content=(
     'alias dwnld="cd ~/Downloads"'
 
     "# Pacman Shortcuts"
-    'alias sync="sudo pacman -Syyy"'
+    'alias sync="sudo pacman -Sy"'
     'alias install="sudo pacman -S"'
-    'alias update="sudo pacman -Syyu | lolcat"'
+    'alias update="sudo pacman -Syu | lolcat"'
 
     "# Cleanup"
-    'alias cleanup="sudo pacman -Rns \$(pacman -Qdtq)"'
+    'alias cleanup="sudo pacman -Rns $(pacman -Qdtq)"'
     'alias clean="sudo pacman -Scc --noconfirm"'
 
     "# Networking"
@@ -114,7 +114,7 @@ custom_content=(
 
     "# Startup Features"
     'neofetch | lolcat'
-    'QUOTE_FILE="$HOME/.Terminal_Quotes"'
+    'QUOTE_FILE="$HOME/.Terminal_Quotes/quotes"'
     'if [ -f "$QUOTE_FILE" ]; then'
     '    RANDOM_QUOTE=$(shuf -n 1 "$QUOTE_FILE")'
     '    echo -e "\n$RANDOM_QUOTE\n" | lolcat'
@@ -194,7 +194,7 @@ fi
 # Handle quote file
 if [ -f "$HOME/TermiCool/mine" ]; then
     mkdir -p "$HOME/.Terminal_Quotes"
-    mv "$HOME/TermiCool/mine" "$HOME/.Terminal_Quotes/"
+    mv "$HOME/TermiCool/mine" "$HOME/.Terminal_Quotes/quotes"
 fi
 
 # Syntax check before reloading
