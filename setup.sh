@@ -57,7 +57,7 @@ custom_content=(
     "# Pacman Shortcuts"
     'alias sync="sudo pacman -Sy"'
     'alias install="sudo pacman -S"'
-    'alias update="sudo pacman -Syu | lolcat"'
+    'alias update="sudo pacman -Syu "'
 
     "# Cleanup"
     'alias cleanup="sudo pacman -Rns $(pacman -Qdtq)"'
