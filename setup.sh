@@ -92,9 +92,13 @@ if [[ "$install_optional" =~ ^[Yy]$ ]]; then
 fi
 
 # Create TermiCool config file if not exists
-CONFIG_FILE="$HOME/.termicool_config"
-if [ ! -f "$CONFIG_FILE" ]; then
-    cat > "$CONFIG_FILE" << EOF
+
+cat > "$CONFIG_FILE" << EOF
+# TermiCool Configuration
+SHOW_NEOFETCH=true
+...
+EOF
+
 # TermiCool Configuration
 SHOW_NEOFETCH=true
 SHOW_QUOTES=true
