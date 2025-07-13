@@ -5,12 +5,6 @@
 # Enable strict error handling
 set -euo pipefail
 
-# Enable debug mode (set to true for verbose output)
-DEBUG=false
-
-# Define CONFIG_FILE early to avoid unbound variable error
-CONFIG_FILE="$HOME/.termicool_config"
-
 # Log messages with timestamp
 log_message() {
     local color=$1 symbol=$2
@@ -56,7 +50,7 @@ optional_pkgs=(
     "ansible" "vagrant" "minikube" "helm" "packer" "gh" "deno" "julia" "jest"
 )
 
-# Install packages with retry and optional verbose output
+# Install packages with retry
 install_packages() {
     local pkg_list=("$@") missing_pkgs=() retries=3 attempt=1
     log_message "34" "🔍" "Checking packages..."
@@ -66,12 +60,7 @@ install_packages() {
     if [ ${#missing_pkgs[@]} -gt 0 ]; then
         log_message "34" "📦" "Installing: ${missing_pkgs[*]}"
         while [ $attempt -le $retries ]; do
-            if [ "$DEBUG" = true ]; then
-                $PKG_MGR "${missing_pkgs[@]}" 2>&1 | tee -a /tmp/pkg_install.log
-            else
-                $PKG_MGR "${missing_pkgs[@]}" 2>&1 | tee -a /tmp/pkg_install.log > /dev/null
-            fi
-            if [ $? -eq 0 ]; then
+            if $PKG_MGR "${missing_pkgs[@]}" 2>&1 | tee -a /tmp/pkg_install.log; then
                 log_message "32" "✅" "Packages installed."
                 return 0
             fi
@@ -96,20 +85,14 @@ if [[ "$install_optional" =~ ^[Yy]$ ]]; then
         log_message "34" "📦" "Installing yay (AUR helper)..."
         git clone https://aur.archlinux.org/yay.git /tmp/yay
         cd /tmp/yay
-        if [ "$DEBUG" = true ]; then
-            makepkg -si --noconfirm 2>&1 | tee -a /tmp/yay_install.log
-        else
-            makepkg -si --noconfirm 2>&1 | tee -a /tmp/yay_install.log > /dev/null
-        fi
+        makepkg -si --noconfirm || log_message "31" "⚠️" "Failed to install yay."
         cd -
-        if [ $? -ne 0 ]; then
-            log_message "31" "⚠️" "Failed to install yay."
-        fi
     fi
     install_packages "${optional_pkgs[@]}"
 fi
 
 # Create TermiCool config file if not exists
+CONFIG_FILE="$HOME/.termicool_config"
 if [ ! -f "$CONFIG_FILE" ]; then
     cat > "$CONFIG_FILE" << EOF
 # TermiCool Configuration
@@ -128,7 +111,7 @@ log_message "34" "🛠️" "Choose: 1) Rebuild .bashrc  2) Append (default)  3) 
 read -r choice
 choice=${choice:-2}
 
-# Define custom content with additional aliases
+# Define custom content
 custom_content=(
     "# >>> TermiCool Ultimate Configuration >>>"
     "# Extensive developer/user aliases, functions, and customization"
@@ -147,7 +130,9 @@ custom_content=(
     '[ -f "$HOME/.termicool_aliases" ] && source "$HOME/.termicool_aliases"'
 
     "## Prompt Customization"
-    'parse_git_branch() { git branch 2>/dev/null | sed -e "/^[^*]/d" -e "s/* \(.*\)/ (\1)/"; }'
+    'parse_git_branch() {'
+    '    git branch 2>/dev/null | sed -e "/^[^*]/d" -e "s/* \(.*\)/ (\1)/"'
+    '}'
     'set_prompt() {'
     '    case "$COLOR_SCHEME" in'
     '        default) USER_COLOR="\e[32;1m"; DIR_COLOR="\e[33;1m"; GIT_COLOR="\e[35;1m" ;;'
@@ -175,26 +160,6 @@ custom_content=(
     '}'
     'command -v starship &> /dev/null && eval "$(starship init bash)"'
     'set_prompt'
-
-    "## Additional Helpful Aliases"
-    'alias gd="git diff"'
-    'alias gb="git branch"'
-    'alias gcm="git checkout master"'
-    'alias gcb="git checkout -b"'
-    'alias gaa="git add ."'
-    'alias gcam="git commit -am"'
-    'alias reboot="sudo reboot"'
-    'alias shutdown="sudo shutdown now"'
-    'alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"'
-    'alias rmf="rm -rf"'
-    'alias cpr="cp -r"'
-    'alias mvf="mv -f"'
-    'alias ipa="ip addr show"'
-    'alias ipl="ip link show"'
-    'alias ipt="sudo iptables -L"'
-    'alias cls="clear"'
-    'alias h="history"'
-    'alias j="jobs"'
 
     "## Navigation"
     'alias ..="cd .."'
@@ -386,7 +351,9 @@ custom_content=(
     'alias taskdone="task done"'
 
     "## Custom Functions"
-    'mkcd() { mkdir -p "$1" && cd "$1"; }'
+    'mkcd() {'
+    '    mkdir -p "$1" && cd "$1"'
+    '}'
     'extract() {'
     '    [ -f "$1" ] || { echo "File not found: $1"; return 1; }'
     '    case "$1" in'
@@ -398,6 +365,7 @@ custom_content=(
     '        *) echo "Unsupported format: $1" ;;'
     '    esac'
     '}'
+
     "## Alias Viewing Function"
     'termicool_aliases() {'
     '    if command -v lolcat &> /dev/null; then'
