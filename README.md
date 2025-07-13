@@ -1,91 +1,60 @@
-TermiCool
-Make your Arch terminal fun, productive, and developer-ready!
-TermiCool is a streamlined setup script that transforms your Arch Linux terminal into a vibrant, efficient, and feature-rich environment. Perfect for developers and terminal enthusiasts, it automates the installation of essential tools, adds powerful shortcuts, and enhances your terminal with colorful prompts, ASCII art, and motivational quotes. From coding in Python, Go, or Rust to managing Docker containers, TermiCool makes your workflow both fun and productive.
+# TermiCool
 
-Key Features
+**Make your Arch terminal fun again!**
 
-Developer Shortcuts: Aliases for Git, Python, Go, Rust, Docker, Kubernetes, and more to streamline coding tasks.
-System Utilities: Easy commands for package management, system monitoring, and navigation.
-Smart Navigation: Uses zoxide for intelligent directory switching and fzf for fuzzy finding.
-Pacman Shortcuts: Simplified Arch Linux package management with install, update, and cleanup.
-Visual Flair: Colorful Git-aware prompt, starship support, neofetch, lolcat, and ASCII art for a stunning terminal.
-Motivational Quotes: Displays random quotes on startup from a customizable file.
-Customizable: XDG-compliant quote storage and easy .bashrc editing for personalization.
-Robust Setup: Debugged installation with logging and backup support.
+TermiCool is a comprehensive setup script designed to supercharge your Arch Linux terminal experience. It brings fun and productivity to your workflow by adding useful tools, shortcuts, and visual enhancements. The script automatically installs essential packages like `lolcat`, `neofetch`, and more, while adding practical aliases for navigation, system monitoring, Git, and development. It even includes motivational quotes and tweaks to make your terminal experience more enjoyable.
 
-Prerequisites
+![Screenshot](https://github.com/user-attachments/assets/e2ee8ae5-2bf7-48ef-9db7-4fba5c1b1192)
 
-Operating System: Arch Linux or an Arch-based distribution (e.g., Manjaro).
-Privileges: sudo access for installing packages.
-Internet: Required for package installation and tools like neofetch.
+## Features
+- **Custom Shortcuts:** Speed up your command-line navigation with user-friendly shortcuts.
+- **Pacman Shortcuts:** Simplified package management for Arch Linux with pacman aliases.
+- **Quotes:** Enjoy  quotes about system info on terminal startup.
+- **Fun Additions:** Includes `neofetch`, `lolcat`, and more to add fun and vibrancy to your terminal.
+- **Customizable:** Structured, XDG-compliant configuration file for quotes and personalization.
+  
+## How to Install
 
-Installation
+### Prerequisites
+Make sure you're running Arch Linux and have sudo privileges.
 
-Clone the Repository:
-[ -d "TermiCool" ] && rm -rf TermiCool
-git clone https://github.com/manas1511200/TermiCool.git
-cd TermiCool
+### Installation Steps
+1. Clone the repository and navigate to the project directory:
+    ```bash
+    [ -d "TermiCool" ] && rm -rf "TermiCool"
+    git clone https://github.com/manas1511200/TermiCool.git
+    cd TermiCool
+    chmod +x setup.sh
+    ./setup.sh
+    source ~/.bashrc
+    cd ..
+    ```
 
+### Additional Commands
 
-Run the Setup Script:
-chmod +x setup.sh
-./setup.sh
+- **Check the added keys:**
+    ```bash
+    keys
+    ```
 
+- **Revert back to your original `.bashrc`:**
+    ```bash
+    cp ~/.bashrc.backup ~/.bashrc
+    source ~/.bashrc
+    ```
 
-Follow the Prompts:
+- **Reset to the system default `.bashrc`:**
+    ```bash
+    cp /etc/skel/.bashrc ~/
+    ```
 
-Choose:
-1: Rebuild .bashrc (replaces with preserved configs).
-2: Append (updates script-managed section, default).
-3: Preview customizations without applying.
+- **Reload the setup (if you want to reapply the changes):**
+    ```bash
+    reload
+    ```
 
+### Customization
+You can easily edit the `.bashrc` file to modify configurations, add new aliases, or make other adjustments to fit your preferences.
 
-Opt to install developer tools (e.g., Python, Go, Docker) when prompted.
-
-
-Reload Your Shell:
-source ~/.bashrc
-cd ..
-
-
-
-Usage
-
-List Available Commands:
-termicool_help
-
-  Displays all TermiCool aliases and functions.
-
-Revert to Backup:
-cp ~/.bashrc.bak-$(ls -t ~/.bashrc.bak-* | head -n1) ~/.bashrc
-source ~/.bashrc
-
-  Restores the latest backup created during setup.
-
-Reset to System Default:
-cp /etc/skel/.bashrc ~/.bashrc
-source ~/.bashrc
-
-  Reverts to Arch’s default .bashrc.
-
-Reload TermiCool Setup:
-cd TermiCool
-./setup.sh
-source ~/.bashrc
-cd ..
-
-  Reapplies TermiCool customizations.
-
-
-Customization
-
-Edit .bashrc: Modify ~/.bashrc to tweak aliases or the prompt.
-Add Quotes: Create ~/.Terminal_Quotes/quotes with one quote per line for random startup messages.
-Starship Prompt: If installed, customize the prompt via ~/.config/starship.toml.
-Logs: Check /tmp/termicool.log or /tmp/pkg_install.log for setup issues.
-
-Troubleshooting
-
-Installation Errors: Review /tmp/pkg_install.log for package issues. Ensure internet connectivity.
-Syntax Errors: If .bashrc fails, check /tmp/termicool.log and restore a backup.
-Missing Tools: Some aliases require optional packages. Rerun setup.sh and select y for developer tools.
+## Contributions
+Feel free to fork this project and contribute improvements. If you have any suggestions or issues, please open an issue or create a pull request.
