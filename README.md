@@ -1,7 +1,7 @@
 TermiCool
 Make your Arch terminal fun, productive, and developer-ready!
 TermiCool is a streamlined setup script that transforms your Arch Linux terminal into a vibrant, efficient, and feature-rich environment. Perfect for developers and terminal enthusiasts, it automates the installation of essential tools, adds powerful shortcuts, and enhances your terminal with colorful prompts, ASCII art, and motivational quotes. From coding in Python, Go, or Rust to managing Docker containers, TermiCool makes your workflow both fun and productive.
-![Uploading image.png…]()
+<img width="1833" height="665" alt="image" src="https://github.com/user-attachments/assets/e1b0720e-b5d2-4b7a-befc-6317baa65bf0" />
 
 Features
 
