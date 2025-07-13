@@ -253,10 +253,14 @@ custom_content=(
     'alias pyfmt="black ."'
     'alias pylint="pylint --rcfile ~/.pylintrc"'
     'alias pytest="pytest --verbose"'
+    'alias venv="mkvenv"'  # New alias for creating virtual environments
     'mkvenv() {'
-    '    [ -z "$1" ] && { echo "Usage: mkvenv <env_name>"; return 1; }'
-    '    python -m venv "$1" && source "$1/bin/activate" && pipup && pip install black pylint pytest'
-    '    echo "Virtual environment \'$1\' created."'
+    '    local env_name="${1:-venv}" dir="${2:-.}"'
+    '    [ -d "$dir" ] || { echo "Directory $dir does not exist"; return 1; }'
+    '    cd "$dir"'
+    '    python -m venv "$env_name" && source "$env_name/bin/activate" && pip install --upgrade pip && pip install black pylint pytest'
+    '    echo "Virtual environment \'$env_name\' created in $dir"'
+    '    cd - > /dev/null'
     '}'
     'actvenv() { [ -d "$1" ] && source "$1/bin/activate" || echo "Directory \'$1\' not found."; }'
     'deactvenv() { deactivate 2>/dev/null || echo "No virtual environment active."; }'
@@ -389,7 +393,7 @@ custom_content=(
     '    echo -e "\nGit:" | $c'
     '    echo "  gs, ga, gc, gp, gl, gco, gbr, gpull, gclone, gdiff, gst, gsp, grebase, gundo, ghpr, ghissue" | $c'
     '    echo -e "\nPython:" | $c'
-    '    echo "  pipup, pyfmt, pylint, pytest, mkvenv, actvenv, deactvenv" | $c'
+    '    echo "  pipup, pyfmt, pylint, pytest, venv, mkvenv, actvenv, deactvenv" | $c'
     '    echo -e "\nGo:" | $c'
     '    echo "  gob, gor, got, gofmt" | $c'
     '    echo -e "\nRust:" | $c'
@@ -427,9 +431,10 @@ custom_content=(
     "## Help Command"
     'termicool_help() {'
     '    termicool_aliases'
-    '    echo -e "\nFunctions: mkcd, extract, newproj, prompt_toggle, color_toggle, termicool_help, termicool_aliases" | lolcat'
+    '    echo -e "\nFunctions: mkcd, extract, prompt_toggle, color_toggle, termicool_help, termicool_aliases, mkvenv, actvenv, deactvenv" | lolcat'
     '    echo "Customization: Edit ~/.termicool_config or ~/.termicool_aliases" | lolcat'
     '    echo "Run \`prompt_toggle {simple|git|minimal|fancy}\` or \`color_toggle {default|neon|pastel}\` to customize prompt" | lolcat'
+    '    echo "Use \`venv [env_name] [directory]\` to create and activate a Python virtual environment" | lolcat'
     '}'
 
     "## Auto-completion"
