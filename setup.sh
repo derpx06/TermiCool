@@ -88,7 +88,7 @@ if [[ "$install_optional" =~ ^[Yy]$ ]]; then
         makepkg -si --noconfirm || log_message "31" "⚠️" "Failed to install yay."
         cd -
     fi
-    install_packages "${optional_pkgs[@]}"]
+    install_packages "${optional_pkgs[@]}"
 fi
 
 # Create TermiCool config file if not exists
@@ -381,7 +381,7 @@ custom_content=(
     '}'
 
     "## Alias Viewing Function"
-    'shortcuts() {'
+    'termicool_aliases() {'
     '    if command -v lolcat &> /dev/null; then'
     '        local c="lolcat"'
     '    else'
