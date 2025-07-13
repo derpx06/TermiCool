@@ -1,15 +1,31 @@
 #!/bin/bash
 
-# Enable debugging (comment out if not needed)
+
+# Enable debugging (optional)
 # set -x
 
-# Check if the system is Arch Linux
-if ! grep -q "Arch" /etc/os-release; then
-    echo "This script is designed for Arch Linux. Exiting..."
+# Function to check if the system is Arch-based
+is_arch_based() {
+    grep -qi 'ID=arch' /etc/os-release || grep -qi 'ID_LIKE=arch' /etc/os-release
+}
+
+# Check for Arch-based system
+if ! is_arch_based; then
+    echo "❌ This script is designed for Arch-based Linux distributions. Exiting..."
     exit 1
 fi
 
-# Check for required packages and install if missing
+# Detect package manager: pamac or pacman
+if command -v pamac &> /dev/null; then
+    PKG_MGR="pamac install --no-confirm"
+elif command -v pacman &> /dev/null; then
+    PKG_MGR="sudo pacman -Sy --noconfirm"
+else
+    echo "❌ Neither pamac nor pacman found. Cannot install packages. Exiting..."
+    exit 1
+fi
+
+# List of required packages
 required_pkgs=("lolcat" "neofetch" "ncdu" "htop" "tree" "lm_sensors" "curl" "wget" "git" "net-tools")
 missing_pkgs=()
 
@@ -19,10 +35,11 @@ for pkg in "${required_pkgs[@]}"; do
     fi
 done
 
+# Install missing packages
 if [ ${#missing_pkgs[@]} -gt 0 ]; then
-    echo "Installing missing packages: ${missing_pkgs[*]}"
-    sudo pacman -Sy --noconfirm "${missing_pkgs[@]}" || {
-        echo "Failed to install packages. Exiting..."
+    echo "📦 Installing missing packages: ${missing_pkgs[*]}"
+    $PKG_MGR "${missing_pkgs[@]}" || {
+        echo "❌ Failed to install required packages. Exiting..."
         exit 1
     }
 fi
