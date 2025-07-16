@@ -50,28 +50,36 @@ optional_pkgs=(
     "ansible" "vagrant" "minikube" "helm" "packer" "gh" "deno" "julia" "jest"
 )
 
-# Install packages with retry
+# Install packages with retry and detailed logging
 install_packages() {
     local pkg_list=("$@") missing_pkgs=() retries=3 attempt=1
-    log_message "34" "🔍" "Checking packages..."
+    log_message "34" "🔍" "Checking packages: ${pkg_list[*]}"
     for pkg in "${pkg_list[@]}"; do
-        $PKG_CHECK "$pkg" &> /dev/null 2>&1 || { missing_pkgs+=("$pkg"); log_message "33" "⚠️" "$pkg missing."; }
+        if $PKG_CHECK "$pkg" &> /dev/null; then
+            log_message "32" "✅" "$pkg is already installed."
+        else
+            missing_pkgs+=("$pkg")
+            log_message "33" "⚠️" "$pkg is missing."
+        fi
     done
     if [ ${#missing_pkgs[@]} -gt 0 ]; then
         log_message "34" "📦" "Installing: ${missing_pkgs[*]}"
         while [ $attempt -le $retries ]; do
+            log_message "34" "🔄" "Attempt $attempt of $retries..."
             if $PKG_MGR "${missing_pkgs[@]}" 2>&1 | tee -a /tmp/pkg_install.log; then
-                log_message "32" "✅" "Packages installed."
+                log_message "32" "✅" "Packages installed successfully."
                 return 0
+            else
+                log_message "31" "❌" "Installation failed. Retrying..."
+                ((attempt++))
+                sleep 3
             fi
-            log_message "31" "❌" "Attempt $attempt/$retries failed."
-            ((attempt++))
-            sleep 3
         done
-        log_message "31" "❌" "Installation failed. Check /tmp/pkg_install.log."
+        log_message "31" "❌" "Installation failed after $retries attempts. Check /tmp/pkg_install.log."
         exit 1
+    else
+        log_message "32" "✅" "All packages are already installed."
     fi
-    log_message "32" "✅" "All packages installed."
 }
 
 # Install required packages
@@ -85,7 +93,11 @@ if [[ "$install_optional" =~ ^[Yy]$ ]]; then
         log_message "34" "📦" "Installing yay (AUR helper)..."
         git clone https://aur.archlinux.org/yay.git /tmp/yay
         cd /tmp/yay
-        makepkg -si --noconfirm || log_message "31" "⚠️" "Failed to install yay."
+        if makepkg -si --noconfirm; then
+            log_message "32" "✅" "yay installed successfully."
+        else
+            log_message "31" "⚠️" "Failed to install yay."
+        fi
         cd -
     fi
     install_packages "${optional_pkgs[@]}"
@@ -111,7 +123,7 @@ log_message "34" "🛠️" "Choose: 1) Rebuild .bashrc  2) Append (default)  3) 
 read -r choice
 choice=${choice:-2}
 
-# Define custom content
+# Define custom content (without custom functions)
 custom_content=(
     "# >>> TermiCool Ultimate Configuration >>>"
     "# Extensive developer/user aliases, functions, and customization"
@@ -253,7 +265,7 @@ custom_content=(
     'alias pyfmt="black ."'
     'alias pylint="pylint --rcfile ~/.pylintrc"'
     'alias pytest="pytest --verbose"'
-    'alias venv="mkvenv"'  # New alias for creating virtual environments
+    'alias venv="mkvenv"'  
     'mkvenv() {'
     '    local env_name="${1:-venv}" dir="${2:-.}"'
     '    [ -d "$dir" ] || { echo "Directory $dir does not exist"; return 1; }'
@@ -354,22 +366,6 @@ custom_content=(
     'alias taskadd="task add"'
     'alias taskdone="task done"'
 
-    "## Custom Functions"
-    'mkcd() {'
-    '    mkdir -p "$1" && cd "$1"'
-    '}'
-    'extract() {'
-    '    [ -f "$1" ] || { echo "File not found: $1"; return 1; }'
-    '    case "$1" in'
-    '        *.tar.gz) tar xzf "$1" ;;'
-    '        *.tar) tar xf "$1" ;;'
-    '        *.zip) unzip "$1" ;;'
-    '        *.7z) 7z x "$1" ;;'
-    '        *.rar) unrar x "$1" 2>/dev/null || echo "Install unrar"; ;;'
-    '        *) echo "Unsupported format: $1" ;;'
-    '    esac'
-    '}'
-
     "## Alias Viewing Function"
     'termicool_aliases() {'
     '    if command -v lolcat &> /dev/null; then'
@@ -383,7 +379,7 @@ custom_content=(
     '    echo -e "\nPackage Management:" | $c'
     '    echo "  sync, install, update, cleanup, clean, pkginfo, aur" | $c'
     '    echo -e "\nFile Management:" | $c'
-    '    echo "  ll, ls, lsd, mkdir, rm, cp, mv, duh, findlarge, zipit, untar, 7z, extract" | $c'
+    '    echo "  ll, ls, lsd, mkdir, rm, cp, mv, duh, findlarge, zipit, untar, 7z" | $c'
     '    echo -e "\nText/Search:" | $c'
     '    echo "  nano, vim, cat, less, json, grep, findfile, ftext, fuzzy, tldr, cheat" | $c'
     '    echo -e "\nSystem Monitoring:" | $c'
@@ -424,14 +420,12 @@ custom_content=(
     '    echo "  ytdl, ffmpeg" | $c'
     '    echo -e "\nProductivity:" | $c'
     '    echo "  task, taskadd, taskdone" | $c'
-    '    echo -e "\nFun:" | $c'
-    '    echo "  sayhello, weather, cowsay, starwars, banner, fortune, asciiart" | $c'
     '}'
 
     "## Help Command"
     'termicool_help() {'
     '    termicool_aliases'
-    '    echo -e "\nFunctions: mkcd, extract, prompt_toggle, color_toggle, termicool_help, termicool_aliases, mkvenv, actvenv, deactvenv" | lolcat'
+    '    echo -e "\nFunctions: prompt_toggle, color_toggle, termicool_help, termicool_aliases" | lolcat'
     '    echo "Customization: Edit ~/.termicool_config or ~/.termicool_aliases" | lolcat'
     '    echo "Run \`prompt_toggle {simple|git|minimal|fancy}\` or \`color_toggle {default|neon|pastel}\` to customize prompt" | lolcat'
     '    echo "Use \`venv [env_name] [directory]\` to create and activate a Python virtual environment" | lolcat'
